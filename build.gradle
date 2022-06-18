@@ -10,8 +10,8 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "1.0"
-group = "surreal.modid"
-archivesBaseName = "modid"
+group = "surreal.californication"
+archivesBaseName = "Chloefication"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
@@ -23,12 +23,48 @@ minecraft {
     runDir = "run"
     mappings = "snapshot_20171003"
     makeObfSourceJar = false
+    def args = [
+            '-Dfml.coreMods.load=surreal.californication.core.ChloeLoadingPlugin'
+    ]
+    clientJvmArgs.addAll(args)
+    serverJvmArgs.addAll(args)
 }
 
 repositories {
+    maven {
+        name "ic2, forestry"
+        url "http://maven.ic2.player.to/"
+    }
+    maven {
+        name "progwml6"
+        url "http://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        name "CCL Maven"
+        url "http://chickenbones.net/maven/"
+    }
+    maven {
+        name "CurseForge"
+        url "https://minecraft.curseforge.com/api/maven/"
+    }
+    maven {
+        name 'tterrag Maven'
+        url "https://maven.tterrag.com/"
+    }
 }
 
 dependencies {
+    deobfCompile "mezz.jei:jei_1.12.2:+"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.28-17"
+
+    deobfCompile "codechicken:ChickenASM:1.12-1.0.2.9"
+    deobfCompile "codechicken-lib-1-8:CodeChickenLib-1.12.2:3.2.3.358:universal"
+
+    // Gregtech
+    compile files("libs/gregtech-1.12.2-2.3.1-beta.jar")
+
+    // IC2
+    deobfCompile "net.industrial-craft:industrialcraft-2:2.8.99-ex112"
 }
 
 processResources {
